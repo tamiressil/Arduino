@@ -231,3 +231,34 @@ void loop() {
   delay(2000);
 }
 
+# Agora
+
+// Declaração dos pinos dos motores e sensores
+const int8_t mDirF = 5, mDirT = 6;   // Motor direito: frente e trás
+const int8_t mEsqF = 10, mEsqT = 11; // Motor esquerdo: frente e trás
+const int8_t sDir = A0, sEsq = A1;   // Sensores direito e esquerdo
+
+void setup() {
+  // Configura os sensores como entrada
+  pinMode(sDir, INPUT);
+  pinMode(sEsq, INPUT);
+
+  // Configura os pinos dos motores como saída
+  pinMode(mDirF, OUTPUT);
+  pinMode(mDirT, OUTPUT); 
+  pinMode(mEsqF, OUTPUT);
+  pinMode(mEsqT, OUTPUT);
+}
+
+void loop() {
+  static const uint8_t vel = 100; // Velocidade dos motores (ajuste conforme necessário)
+
+  // Controle do motor esquerdo
+  analogWrite(mEsqF, vel * !digitalRead(sEsq)); // Avança se não detectar linha
+  analogWrite(mEsqT, vel * digitalRead(sEsq));  // Ré se detectar linha
+
+  // Controle do motor direito
+  analogWrite(mDirF, vel * !digitalRead(sDir)); // Avança se não detectar linha
+  analogWrite(mDirT, vel * digitalRead(sDir));  // Ré se detectar linha
+}
+
